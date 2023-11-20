@@ -26,4 +26,8 @@ return 0;
 //User Defined Functions' Definition//
 /////////////////////////////////////
 
+<<<<<<< Updated upstream
 // testing
+=======
+// testing again
+>>>>>>> Stashed changes
