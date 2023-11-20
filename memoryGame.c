@@ -21,7 +21,6 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 /////////////////////////////////
 int main(){
 return 0;
-//Testing
 }
 ///////////////////////////////////////
 //User Defined Functions' Definition//
