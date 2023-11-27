@@ -9,7 +9,7 @@ Team member 3 "Name" | "Percentage of Contribution to The Project"
 Team member 4 "Name" | "Percentage of Contribution to The Project"
 */
 ////////////////////
-#include<stdio.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
