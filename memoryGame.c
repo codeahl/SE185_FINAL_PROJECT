@@ -15,12 +15,15 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 #include <time.h>
 #include <string.h>
 
-
-
 //////////////////////
 //Struct Definition//
 ////////////////////
 
+struct Player {
+	int rank;
+	int score;
+	char name[3];
+};
 
 /////////////////////////////////////
 //User Defined Functions Prototype//
@@ -38,13 +41,43 @@ void print_blank(int num);
 
 
 int main(){
-    tri_selected();
-    printf("\n\n\n");
-    sqr_selected();
-    printf("\n\n\n");
-    cir_selected();
-    printf("\n\n\n");
-    x_selected();
+    
+	struct Player highs[9];
+	char wantToPlay;
+
+	// Uncomment for visualizing all of the selected shapes. 
+
+	// tri_selected();
+    // printf("\n\n\n");
+    // sqr_selected();
+    // printf("\n\n\n");
+    // cir_selected();
+    // printf("\n\n\n");
+    // x_selected();
+
+	// Start
+	printf("Welcome to the Memory game.\n");
+	printf("To start the game, press \"g\".");
+	printf("In the game, various shapes will appear with a square around it.\n");
+	printf("You must remember the shapes that are boxed and repeat the order.\n");
+	printf("Use w for up, s for down, a for left, and d for right.\n\n");
+
+	printf("Highscore Table:\n");
+	printf("Rank	Score	Name\n"); // seperated with tab characters
+	for (int i = 1; i < 10; i++){	// printing off ranks, scores, and names
+		printf("%d	%d	%s\n", highs[i].rank, highs[i].score, highs[i].name);
+	}
+	printf("What would you like to do?\n");
+	printf("\"g\" for a game.\n");
+	scanf("%c", &wantToPlay);	// scan user input
+	if (wantToPlay != 'g'){
+		printf("See you next time!");	// user doesn't input "g" and ends game
+		return 0;
+	}
+	printf("3...\n");
+	printf("2...\n");
+	printf("1...\n");
+
     return 0;
 
 }
