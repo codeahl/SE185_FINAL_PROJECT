@@ -22,7 +22,7 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 struct Player {
 	int rank;
 	int score;
-	char name[3];
+	char name[4];
 };
 
 /////////////////////////////////////
@@ -43,6 +43,12 @@ void print_blank(int num);
 int main(){
     
 	struct Player highs[9];
+	for (int i = 1; i < 10; i++){
+		highs[i].rank = i;
+		highs[i].score = 0;
+		strcpy(highs[i].name, "---");
+	}
+
 	char wantToPlay;
 
 	// Uncomment for visualizing all of the selected shapes. 
@@ -57,7 +63,7 @@ int main(){
 
 	// Start
 	printf("Welcome to the Memory game.\n");
-	printf("To start the game, press \"g\".");
+	printf("To start the game, press \"g\".\n");
 	printf("In the game, various shapes will appear with a square around it.\n");
 	printf("You must remember the shapes that are boxed and repeat the order.\n");
 	printf("Use w for up, s for down, a for left, and d for right.\n\n");
