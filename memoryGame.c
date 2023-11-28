@@ -38,6 +38,8 @@ void print_tri();
 void print_sqr_cir();
 void print_x();
 void print_blank(int num);
+void none_selected();
+void post_round_countdown();
 
 
 int main(){
@@ -91,14 +93,54 @@ int main(){
 	// \n\n\n\n\n\n\n\n\n\n		<- 10 Lines (for reference if need to copy)
 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); // 40 Lines
 	
-	int level = 1;
-	int levelShapes[99];
+	
+	int levelShapes[99]; //array to keep track of the order of the shapes for the current game
+	srand((int)time(NULL));
+
+	//assign levels 1-100 their shape indexed 0-99
 	for (int i = 0; i < 99; i++){
-		levelShapes[i] = rand()%4;
+		levelShapes[i] = rand()%4; 
 	}
 
-    return 0;
+	//<--------------game loop----------------->
 
+	int x = 1;
+	int level = 1;
+	int score = 0;
+
+	while (x == 1){
+
+		//repeat for what level user is on
+		for(int i = 0; i < level; i++){
+			//print shape selected
+			switch (levelShapes[i - 1]){
+				case 0: tri_selected();
+					break;
+				case 1: sqr_selected();
+					break;
+				case 2: cir_selected();
+					break;
+				case 3: x_selected();
+					break;
+			}
+			
+			//clear board
+			sleep(1);
+			printf("\n\n\n\n\n\n\n\n\n\n");
+			none_selected();
+			sleep(1);
+		}
+
+		//show post round screen
+		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		printf("Turn: %d\n", level);
+		printf("Score: %d\nOkay, what was the order?(Use w,a,s,d)\n", score);
+		//postround screen goes here
+		sleep(1);
+
+		level++;
+	}
+    return 0;
 }
 
 void print_blank(int num) {
@@ -368,5 +410,22 @@ void x_selected() {
 
 	print_blank(12);
 	printf(".............\n");
+}
+
+void none_selected() {
+    print_tri();
+    print_sqr_cir();
+    print_x();
+}
+
+void post_round_countdown(){
+	printf("Good job, get ready for the next round.\n");
+	sleep(1);
+	printf("3...\n");
+	sleep(1);
+	printf("2...\n");
+	sleep(1);
+	printf("1...\n");
+	sleep(1);
 }
 
