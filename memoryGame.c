@@ -42,7 +42,7 @@ void print_blank(int num);
 
 int main(){
     
-	struct Player highs[9];
+	struct Player highs[9];			// Creating highscore table list
 	for (int i = 1; i < 10; i++){
 		highs[i].rank = i;
 		highs[i].score = 0;
@@ -62,7 +62,7 @@ int main(){
     // x_selected();
 
 	// Start
-	printf("Welcome to the Memory game.\n");
+	printf("Welcome to the Memory game.\n");		// USE FULLSCREEN CYGWIN
 	printf("To start the game, press \"g\".\n");
 	printf("In the game, various shapes will appear with a square around it.\n");
 	printf("You must remember the shapes that are boxed and repeat the order.\n");
@@ -80,9 +80,22 @@ int main(){
 		printf("See you next time!");	// user doesn't input "g" and ends game
 		return 0;
 	}
+	usleep(500000);
 	printf("3...\n");
+	sleep(1);
 	printf("2...\n");
+	sleep(1);
 	printf("1...\n");
+	sleep(1);
+	
+	// \n\n\n\n\n\n\n\n\n\n		<- 10 Lines (for reference if need to copy)
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); // 40 Lines
+	
+	int level = 1;
+	int levelShapes[99];
+	for (int i = 0; i < 99; i++){
+		levelShapes[i] = rand()%4;
+	}
 
     return 0;
 
