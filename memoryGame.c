@@ -91,7 +91,8 @@ int main(){
 	sleep(1);
 	
 	// \n\n\n\n\n\n\n\n\n\n		<- 10 Lines (for reference if need to copy)
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); // 40 Lines
+	// printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	// 60 Lines (Screen Clear)
 	
 	
 	int levelShapes[99]; //array to keep track of the order of the shapes for the current game
@@ -102,7 +103,7 @@ int main(){
 		levelShapes[i] = rand()%4; 
 	}
 
-	//<--------------game loop----------------->
+	//<-------------- Game Loop----------------->
 
 	int x = 1;
 	int level = 1;
@@ -110,10 +111,11 @@ int main(){
 
 	while (x == 1){
 
-		//repeat for what level user is on
-		for(int i = 0; i < level; i++){
-			//print shape selected
-			switch (levelShapes[i - 1]){
+		// Loop for each level
+		for(int i = 1; i <= level; i++){
+			// Print level shape
+			printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			switch (levelShapes[i]){
 				case 0: tri_selected();
 					break;
 				case 1: sqr_selected();
@@ -123,23 +125,25 @@ int main(){
 				case 3: x_selected();
 					break;
 			}
-			
-			//clear board
-			sleep(1);
-			printf("\n\n\n\n\n\n\n\n\n\n");
-			none_selected();
-			sleep(1);
 		}
+		// Clear board after each level
+		sleep(1);
+		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		none_selected();
+		sleep(1);
 
-		//show post round screen
-		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		// Prompt Screen
+		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		printf("Turn: %d\n", level);
 		printf("Score: %d\nOkay, what was the order?(Use w,a,s,d)\n", score);
-		//postround screen goes here
+		
 		sleep(1);
 
 		level++;
 	}
+
+	// Post-game screen goes here
+
     return 0;
 }
 
