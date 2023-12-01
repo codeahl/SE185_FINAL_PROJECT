@@ -95,10 +95,13 @@ int main(){
 	// 60 Lines (Screen Clear)
 	
 	
-	int levelShapes[99]; //array to keep track of the order of the shapes for the current game
+	int levelShapes[99]; // Array to keep track of the order of the shapes for the current game
 	srand((int)time(NULL));
 
-	//assign levels 1-100 their shape indexed 0-99
+	char answer[99] = "";
+
+	char addToAnswer;
+	// Assign levels 1-100 their shape indexed 0-99
 	for (int i = 0; i < 99; i++){
 		levelShapes[i] = rand()%4; 
 	}
@@ -108,39 +111,54 @@ int main(){
 	int x = 1;
 	int level = 1;
 	int score = 0;
+	char input[99];
 
 	while (x == 1){
 
+		answer[0] = '\0'; // Clear answer for each level
+
 		// Loop for each level
-		for(int i = 1; i <= level; i++){
+		for(int i = 0; i < level; i++){
 			// Print level shape
 			printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			
 			switch (levelShapes[i]){
 				case 0: tri_selected();
+					addToAnswer = 'w';
+					strncat(answer, &addToAnswer, 1);
 					break;
 				case 1: sqr_selected();
+					addToAnswer = 'a';
+					strncat(answer, &addToAnswer, 1);
 					break;
 				case 2: cir_selected();
+					addToAnswer = 'd';
+					strncat(answer, &addToAnswer, 1);
 					break;
 				case 3: x_selected();
+					addToAnswer = 's';
+					strncat(answer, &addToAnswer, 1);
 					break;
 			}
+			sleep(1);
 		}
 		// Clear board after each level
-		sleep(1);
 		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		none_selected();
 		sleep(1);
 
 		// Prompt Screen
-		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		printf("%s\n", answer);
 		printf("Turn: %d\n", level);
 		printf("Score: %d\nOkay, what was the order?(Use w,a,s,d)\n", score);
-		
-		sleep(1);
-
-		level++;
+		scanf("%s", &input);
+		if (strncmp(input, answer, level) == 0){
+			level++;
+			score++;
+		}
+		else {x = 0;} // End game	
 	}
+		sleep(1);
 
 	// Post-game screen goes here
 
