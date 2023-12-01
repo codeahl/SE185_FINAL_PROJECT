@@ -44,7 +44,7 @@ void post_round_countdown();
 
 int main(){
     
-	struct Player highs[9];			// Creating highscore table list
+	struct Player highs[10];			// Creating highscore table list
 	for (int i = 1; i < 10; i++){
 		highs[i].rank = i;
 		highs[i].score = 0;
@@ -68,16 +68,18 @@ int main(){
 	printf("To start the game, press \"g\".\n");
 	printf("In the game, various shapes will appear with a square around it.\n");
 	printf("You must remember the shapes that are boxed and repeat the order.\n");
-	printf("Use w for up, s for down, a for left, and d for right.\n\n");
+	printf("Use w for up, s for down, a for left, and d for right.\n");
 
-	printf("Highscore Table:\n");
+	gameLoop:; // Look at end of main() for reference
+
+	printf("\nHighscore Table:\n");
 	printf("Rank	Score	Name\n"); // seperated with tab characters
 	for (int i = 1; i < 10; i++){	// printing off ranks, scores, and names
 		printf("%d	%d	%s\n", highs[i].rank, highs[i].score, highs[i].name);
 	}
 	printf("What would you like to do?\n");
 	printf("\"g\" for a game.\n");
-	scanf("%c", &wantToPlay);	// scan user input
+	scanf("\n%c", &wantToPlay);	// scan user input
 	if (wantToPlay != 'g'){
 		printf("See you next time!");	// user doesn't input "g" and ends game
 		return 0;
@@ -93,8 +95,9 @@ int main(){
 	// \n\n\n\n\n\n\n\n\n\n		<- 10 Lines (for reference if need to copy)
 	// printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	// 60 Lines (Screen Clear)
-	
-	
+
+	//<-------------- Game Loop----------------->
+
 	int levelShapes[99]; // Array to keep track of the order of the shapes for the current game
 	srand((int)time(NULL));
 
@@ -105,8 +108,6 @@ int main(){
 	for (int i = 0; i < 99; i++){
 		levelShapes[i] = rand()%4; 
 	}
-
-	//<-------------- Game Loop----------------->
 
 	int x = 1;
 	int level = 1;
@@ -148,7 +149,7 @@ int main(){
 		sleep(1);
 
 		// Prompt Screen
-		printf("%s\n", answer);
+		printf("\n", answer);
 		printf("Turn: %d\n", level);
 		printf("Score: %d\nOkay, what was the order?(Use w,a,s,d)\n", score);
 		scanf("%s", &input);
@@ -161,9 +162,46 @@ int main(){
 		sleep(1);
 
 	// Post-game screen goes here
+	printf("\nGame Over!\n");
+
+	// Highscore?
+	int tempScore;
+	char playerName[4] = "";
+	char tempName[4] = "";
+
+	for (int i = 1; i < 10; i++){
+    	if (score > highs[i].score){
+        	
+			// Ask for user's name
+			printf("\nWhat is your name? (Enter three capital letters) ");
+			scanf("%s", &playerName);
+			// Update Names / Shift names down
+        	for (int j = i; j < 10; j++){
+            	strcpy(tempName, highs[j].name);  	// Reserve name at rank j
+            	strcpy(highs[j].name, playerName);  // Replace rank score with player's name
+            	strcpy(playerName, tempName);       // Reserve the next rank's name
+        	}
+
+			// Update Score / Shift scores down
+        	for (int j = i; j < 10; j++){
+            	tempScore = highs[j].score;  // Reserve score at rank j
+            	highs[j].score = score;      // Replace rank score with player's score
+            	score = tempScore;           // Reserve the next rank's score
+        	}
+        	break;
+    	}
+	}
+
+	// Play again?
+	char playAgain;
+	printf("\nWould you like to play again? (y/n)\n");
+	scanf("\n%c", &playAgain);
+	if (playAgain == 'y'){ goto gameLoop; }
 
     return 0;
 }
+
+// ----------------FUNCTIONS----------------- //
 
 void print_blank(int num) {
     while(num != 0){
