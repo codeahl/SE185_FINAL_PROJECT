@@ -14,6 +14,7 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
 
 //////////////////////
 //Struct Definition//
@@ -40,16 +41,33 @@ void print_x();
 void print_blank(int num);
 void none_selected();
 void post_round_countdown();
+void print_highscores(struct Player highscore[]);
+void write_to_file(struct Player highscore[], int score, FILE* file);
+void new_screen();
 
 
 int main(){
     
-	struct Player highs[10];			// Creating highscore table list
-	for (int i = 1; i < 10; i++){
-		highs[i].rank = i;
-		highs[i].score = 0;
-		strcpy(highs[i].name, "---");
-	}
+	FILE* file;
+
+
+	struct Player highscore[10];
+	
+	file = fopen("highScores.txt", "r");
+	fscanf(file, "%2d %3s , %2d %3s , %2d %3s , %2d %3s , %2d %3s , %2d %3s , %2d %3s , %2d %3s , %2d %3s .", 
+	&highscore[0].score, highscore[0].name, &highscore[1].score, highscore[1].name, &highscore[2].score, highscore[2].name, &highscore[3].score, highscore[3].name, &highscore[4].score, highscore[4].name, &highscore[5].score, highscore[5].name,
+	&highscore[6].score, highscore[6].name, &highscore[7].score, highscore[7].name, &highscore[8].score, highscore[8].name);
+
+	printf("%s\n", highscore[0].name);
+	printf("%s\n", highscore[0].name);
+	printf("%s\n", highscore[0].name);
+	// fclose(file);
+	// Creating highscore table list
+	// for (int i = 1; i < 10; i++){
+	// 	highscore[i].rank = i;
+	// 	highscore[i].score = 0;
+	// 	strcpy(highscore[i].name, "---");
+	// }
 
 	char wantToPlay;
 
@@ -74,9 +92,7 @@ int main(){
 
 	printf("\nHighscore Table:\n");
 	printf("Rank	Score	Name\n"); // seperated with tab characters
-	for (int i = 1; i < 10; i++){	// printing off ranks, scores, and names
-		printf("%d	%d	%s\n", highs[i].rank, highs[i].score, highs[i].name);
-	}
+	print_highscores(highscore);
 	printf("What would you like to do?\n");
 	printf("\"g\" for a game.\n");
 	scanf("\n%c", &wantToPlay);	// scan user input
@@ -121,7 +137,7 @@ int main(){
 		// Loop for each level
 		for(int i = 0; i < level; i++){
 			// Print level shape
-			printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			new_screen();
 			
 			switch (levelShapes[i]){
 				case 0: tri_selected();
@@ -144,15 +160,32 @@ int main(){
 			sleep(1);
 		}
 		// Clear board after each level
-		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		new_screen();
 		none_selected();
 		sleep(1);
 
 		// Prompt Screen
-		printf("\n", answer);
-		printf("Turn: %d\n", level);
-		printf("Score: %d\nOkay, what was the order?(Use w,a,s,d)\n", score);
-		scanf("%s", &input);
+		printf("\n");
+
+		int isWASD;
+		while(1) {
+			isWASD = 1;
+			printf("Turn: %d\n", level);
+			printf("Score: %d\nOkay, what was the order?(Use w,a,s,d)\n", score);
+			scanf("%s", &input);
+			for(int i = 0; i < strlen(input); i++) {
+				if(input[i] != 119 && input[i] != 97 && input[i] != 115 && input[i] != 100) {
+					isWASD = 0;
+					break;
+				}
+			}
+			if(strlen(input) == level && isWASD) {
+				break;
+			}
+			else {
+				printf("Please enter the correct amount of characters, only using only lowercase \"wasd\"\n\n");
+			}
+		}
 		if (strncmp(input, answer, level) == 0){
 			level++;
 			score++;
@@ -165,32 +198,7 @@ int main(){
 	printf("\nGame Over!\n");
 
 	// Highscore?
-	int tempScore;
-	char playerName[4] = "";
-	char tempName[4] = "";
-
-	for (int i = 1; i < 10; i++){
-    	if (score > highs[i].score){
-        	
-			// Ask for user's name
-			printf("\nWhat is your name? (Enter three capital letters) ");
-			scanf("%s", &playerName);
-			// Update Names / Shift names down
-        	for (int j = i; j < 10; j++){
-            	strcpy(tempName, highs[j].name);  	// Reserve name at rank j
-            	strcpy(highs[j].name, playerName);  // Replace rank score with player's name
-            	strcpy(playerName, tempName);       // Reserve the next rank's name
-        	}
-
-			// Update Score / Shift scores down
-        	for (int j = i; j < 10; j++){
-            	tempScore = highs[j].score;  // Reserve score at rank j
-            	highs[j].score = score;      // Replace rank score with player's score
-            	score = tempScore;           // Reserve the next rank's score
-        	}
-        	break;
-    	}
-	}
+	write_to_file(highscore, score, file);
 
 	// Play again?
 	char playAgain;
@@ -487,5 +495,69 @@ void post_round_countdown(){
 	sleep(1);
 	printf("1...\n");
 	sleep(1);
+}
+
+void print_highscores(struct Player highscore[]) {
+	for(int i = 0, j = 1; i < 9; i++, j++){
+			printf(" %d        %d     %s\n", j, highscore[i].score, highscore[i].name);
+		}
+}
+
+void write_to_file(struct Player highscore[], int score, FILE* file) {
+	int rank = 9;
+	for(int i = 8; i >= 0; i--) {
+		if(score >= highscore[i].score) {
+			rank--;
+		}
+	}
+
+	if(rank < 9) {
+		for (int i = 8; i > rank; i--) {
+    	highscore[i] = highscore[i-1];
+		}
+
+		printf("Congratulations, you made it on the highscore table\n");
+		char tempName[4];
+		int isAlpha;
+		while(1) {
+			isAlpha = 1;
+			printf("Please enter your name (Only 3 captial letters): \n");
+			scanf("%s", tempName);
+			for(int i = 0; i < strlen(tempName); i++) {
+				if(!(tempName[i] >= 65 && tempName[i] <= 90)) {//Checks for a capital alphabet letter
+					isAlpha = 0;
+					break;
+				}
+			}
+			if(isAlpha && strlen(tempName) == 3) {
+				break;
+			}
+			else {
+				printf("Enter only 3 capital alphabet letters\n\n");
+			}
+
+		}
+
+
+		strcpy(highscore[rank].name, tempName);
+		highscore[rank].score = score;
+	}
+	else{
+		return;
+	}
+
+	file = fopen("highScores.txt", "w");
+
+	fprintf(file, "%d %s , %d %s , %d %s , %d %s , %d %s , %d %s , %d %s , %d %s , %d %s .", 
+	highscore[0].score, highscore[0].name, highscore[1].score, highscore[1].name, highscore[2].score, highscore[2].name, highscore[3].score, highscore[3].name, highscore[4].score, highscore[4].name, highscore[5].score, highscore[5].name,
+	highscore[6].score, highscore[6].name, highscore[7].score, highscore[7].name, highscore[8].score, highscore[8].name);
+
+	fclose(file);
+}
+
+void new_screen() {
+	for (int i = 0; i < 100; i++) {
+		printf("\n");
+	}
 }
 
