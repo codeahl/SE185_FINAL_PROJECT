@@ -58,9 +58,6 @@ int main(){
 	&highscore[0].score, highscore[0].name, &highscore[1].score, highscore[1].name, &highscore[2].score, highscore[2].name, &highscore[3].score, highscore[3].name, &highscore[4].score, highscore[4].name, &highscore[5].score, highscore[5].name,
 	&highscore[6].score, highscore[6].name, &highscore[7].score, highscore[7].name, &highscore[8].score, highscore[8].name);
 
-	printf("%s\n", highscore[0].name);
-	printf("%s\n", highscore[0].name);
-	printf("%s\n", highscore[0].name);
 	// fclose(file);
 	// Creating highscore table list
 	// for (int i = 1; i < 10; i++){
@@ -499,7 +496,7 @@ void post_round_countdown(){
 
 void print_highscores(struct Player highscore[]) {
 	for(int i = 0, j = 1; i < 9; i++, j++){
-			printf(" %d        %d     %s\n", j, highscore[i].score, highscore[i].name);
+			printf(" %d	%d	%s\n", j, highscore[i].score, highscore[i].name);
 		}
 }
 
