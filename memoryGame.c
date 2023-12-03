@@ -503,7 +503,7 @@ void print_highscores(struct Player highscore[]) {
 void write_to_file(struct Player highscore[], int score, FILE* file) {
 	int rank = 9;
 	for(int i = 8; i >= 0; i--) {
-		if(score >= highscore[i].score) {
+		if(score > highscore[i].score) {
 			rank--;
 		}
 	}
