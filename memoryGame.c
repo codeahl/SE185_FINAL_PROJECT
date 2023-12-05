@@ -1,12 +1,11 @@
 
-//SE 185: Final Project Template//
+//SE 185: Final Project
 /////////////////////////
 /*
-Team xx (please insert your team number instead of xx)
-Team member 1 "Name" | "Percentage of Contribution to The Project"
-Team member 2 "Name" | "Percentage of Contribution to The Project"
-Team member 3 "Name" | "Percentage of Contribution to The Project"
-Team member 4 "Name" | "Percentage of Contribution to The Project"
+Team xx (I do not believe we were given a team #)
+Team member 1 "Connor Deahl" | "~33%"
+Team member 2 "Ryan Horsey" | "~33%"
+Team member 3 "Carter Ohl" | "~33%"
 */
 ////////////////////
 #include <stdio.h>
@@ -58,13 +57,8 @@ int main(){
 	&highscore[0].score, highscore[0].name, &highscore[1].score, highscore[1].name, &highscore[2].score, highscore[2].name, &highscore[3].score, highscore[3].name, &highscore[4].score, highscore[4].name, &highscore[5].score, highscore[5].name,
 	&highscore[6].score, highscore[6].name, &highscore[7].score, highscore[7].name, &highscore[8].score, highscore[8].name);
 
-	// fclose(file);
-	// Creating highscore table list
-	// for (int i = 1; i < 10; i++){
-	// 	highscore[i].rank = i;
-	// 	highscore[i].score = 0;
-	// 	strcpy(highscore[i].name, "---");
-	// }
+	fclose(file);
+
 
 	char wantToPlay;
 
@@ -105,9 +99,6 @@ int main(){
 	printf("1...\n");
 	sleep(1);
 	
-	// \n\n\n\n\n\n\n\n\n\n		<- 10 Lines (for reference if need to copy)
-	// printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-	// 60 Lines (Screen Clear)
 
 	//<-------------- Game Loop----------------->
 
@@ -155,6 +146,9 @@ int main(){
 					break;
 			}
 			sleep(1);
+			new_screen();
+			none_selected();
+			usleep(250000);
 		}
 		// Clear board after each level
 		new_screen();
@@ -215,6 +209,7 @@ void print_blank(int num) {
 	}
 }
 
+//Shape printing functions until after "x_selected()"
 void print_tri() {
     int i, j;
     for(i = 1; i <= 6;  i++){
@@ -477,6 +472,9 @@ void x_selected() {
 	printf(".............\n");
 }
 
+
+
+
 void none_selected() {
     print_tri();
     print_sqr_cir();
@@ -552,6 +550,7 @@ void write_to_file(struct Player highscore[], int score, FILE* file) {
 	fclose(file);
 }
 
+//Used to clear the screen for a new shape configuration
 void new_screen() {
 	for (int i = 0; i < 100; i++) {
 		printf("\n");
